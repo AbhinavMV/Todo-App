@@ -8,10 +8,10 @@ import { CardHeader, IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useDispatch, useSelector } from 'react-redux';
-import { replaceArray,editArray } from './redux/taskNamesArraySlice';
+import { replaceArray } from './redux/taskNamesArraySlice';
 import { setName } from './redux/TaskNameSlice';
 import { setDescription } from './redux/TaskDescriptionSlice';
-import { toggle, updateItem } from './redux/OpenSlice';
+import {  updateItem } from './redux/OpenSlice';
 import ModalUpadteTask from './ModalUpdateTask';
 const useStyles = makeStyles({
   root: {
