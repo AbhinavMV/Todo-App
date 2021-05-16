@@ -1,14 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const counterSlice = createSlice({
-    name:'counter',
-    initialState: {count:0},
+const openSlice = createSlice({
+    name:'open',
+    initialState: {open:false},
     reducers:{
-        increment: (state) => ({...state,count:state.count+1}),
-        decrement: (state) => ({...state,count:state.count-1}),
+        toggle: (state) => ({...state,open:!state.open}),
     }
 })
 
-export const {increment,decrement} = counterSlice.actions;
+export const {toggle} = openSlice.actions;
 
-export default counterSlice.reducer;
+export default openSlice.reducer;

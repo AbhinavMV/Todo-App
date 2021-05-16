@@ -1,16 +1,39 @@
+import { Grid } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import './App.css';
-import Counter from './ComponentsOne/Counter';
-function App() {
+import { ThemeProvider,createMuiTheme } from '@material-ui/core/styles';
+import Appbar from './ComponentsOne/Appbar';
+import CardItem from './ComponentsOne/CardItem';
+import { useEffect } from 'react';
 
-  const count = useSelector((state) => state.counter.count)
+const theme = createMuiTheme({});
+
+
+const App = () => {
+  // const [taskNames,setTaskNames] = useState([]);
+  // const count = useSelector((state) => state.counter.count);
+  const taskNames = useSelector((state) => state.taskNamesArray)
+  
+useEffect(()=>{
+  // console.log(taskNames)
+},[taskNames]);
+  
 
   return (
-    <div className="App">
-      <h2>Counter Application</h2>
-      <h4> Count: {count} </h4>
-      <Counter/>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Appbar/>
+      <Grid container style={{flexGrow:1,alignContent:'center',padding:30}} spacing={2}>
+        {taskNames?taskNames.map((task,index)=>(
+          <Grid key={index} item xm={12} sm={6} md={4}>
+            {console.log(index)}
+            <CardItem index={index}/>
+          </Grid>
+          
+        )):<div>
+        </div>
+      }
+        
+      </Grid>
+    </ThemeProvider>
   );
 }
 
