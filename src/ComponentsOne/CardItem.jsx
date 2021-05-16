@@ -8,11 +8,11 @@ import { CardHeader, IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useDispatch, useSelector } from 'react-redux';
-import { replaceArray } from './redux/taskNamesArraySlice';
+import { replaceArray,editArray } from './redux/taskNamesArraySlice';
 import { setName } from './redux/TaskNameSlice';
 import { setDescription } from './redux/TaskDescriptionSlice';
-import ModalUI from './ModalUI';
-import { toggle } from './redux/CounterSlice';
+import { toggle, updateItem } from './redux/OpenSlice';
+import ModalUpadteTask from './ModalUpdateTask';
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -23,45 +23,47 @@ const useStyles = makeStyles({
 
 export default function CardItem({index}) {
     const classes = useStyles();
-    const taskNames = useSelector((state) => state.taskNamesArray)
-    // const tName = useSelector((state)=>state.taskName.name)
-    // const tDescription = useSelector((state)=>state.taskDescription.description)
+    const taskNames = useSelector((state) => state.taskNamesArray.tasks)
+
     const dispatch = useDispatch()
     const handleDelete=()=>{
-        let tempArr = [...taskNames]
-        console.log(tempArr.splice(index,1));
-        console.log(tempArr);
-        dispatch(replaceArray(tempArr))
-        window.location.reload()
+        let tempArr = [...taskNames];
+        tempArr.splice(index,1);
+        dispatch(replaceArray(tempArr));
+        localStorage.setItem('tasks',JSON.stringify(tempArr));
+        window.location.reload();
     }
 
-    const handleEdit=()=>{
+    const handleEdit=(e)=>{
+        e.preventDefault();
         dispatch(setName(taskNames[index]['name']))
-        dispatch(setDescription(taskNames[index]['name']))
-        dispatch(toggle())
-    }
+        dispatch(setDescription(taskNames[index]['description']))
+        dispatch(updateItem())
+      }
 
-  return (
-    <Card index={index} className={classes.root}>
-      <CardActionArea>
-          <CardHeader
-            title={taskNames[index]['name']}
-            subheader={taskNames[index]['date']}
-          />
-        <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {taskNames[index]['description']}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions  style={{flexFlow:'row-reverse'}}>
-        <IconButton edge='start' onClick={handleDelete}>
-            <DeleteIcon/>
-        </IconButton>
-        <IconButton edge='start' onClick={handleEdit}>
-            <EditIcon/>
-        </IconButton>
-      </CardActions>
-    </Card>
-  );
+    return (
+      <Card index={index} className={classes.root}>
+        <CardActionArea>
+            <CardHeader
+              title={taskNames[index]['name']}
+              subheader={taskNames[index]['date']}
+            />
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+              {taskNames[index]['description']}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions  style={{flexFlow:'row-reverse'}}>
+          <IconButton edge='start' onClick={handleDelete}>
+              <DeleteIcon/>
+          </IconButton>
+          <IconButton edge='start' onClick={handleEdit}>
+              <EditIcon/>
+          </IconButton>
+          <ModalUpadteTask index={index}/>
+        </CardActions>
+      </Card>
+      
+    );
 }

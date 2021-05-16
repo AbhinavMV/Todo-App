@@ -2,21 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const taskNamesArraySlice = createSlice({
     name:'tasksArray',
-    initialState: [],
+    initialState:{tasks:[]},
     reducers:{
         setTasksArray: (state,action) => {
-            // console.log(action.payload)
-            // console.log(state.tasks)
-            state.push(action.payload)
-                
-            
+            state.tasks.push(action.payload)
         },
-        replaceArray: (state,action) => {
-            state = action.payload
-        },
+        replaceArray: (state,action) => ({...state,tasks:[...action.payload]}),
     }
 })
 
-export const {setTasksArray,replaceArray} = taskNamesArraySlice.actions;
+export const {setTasksArray,replaceArray,editArray} = taskNamesArraySlice.actions;
 
 export default taskNamesArraySlice.reducer;

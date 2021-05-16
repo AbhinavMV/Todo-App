@@ -1,5 +1,6 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import counterSlice from './CounterSlice'
+// import counterSlice from './CounterSlice'
+import OpenSlice from "./OpenSlice";
 import TaskDescriptionSlice from "./TaskDescriptionSlice";
 import taskNamesArraySlice from "./taskNamesArraySlice";
 import TaskNameSlice from "./TaskNameSlice";
@@ -8,7 +9,7 @@ import TaskNameSlice from "./TaskNameSlice";
 
 const store = configureStore({
     reducer: {
-        counter: counterSlice,
+        open: OpenSlice,
         taskName: TaskNameSlice,
         taskDescription: TaskDescriptionSlice,
         taskNamesArray: taskNamesArraySlice,
